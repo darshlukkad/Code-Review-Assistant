@@ -262,6 +262,10 @@ def main():
     # Sidebar
     threshold, language = display_sidebar()
     
+    # Initialize session state for code
+    if 'code_content' not in st.session_state:
+        st.session_state['code_content'] = ''
+    
     # Main content area
     col1, col2 = st.columns([3, 2])
     
@@ -269,17 +273,20 @@ def main():
         st.subheader("📝 Code Input")
         
         # Load example if requested
-        default_code = ""
         if st.session_state.get('example_loaded', False):
-            default_code = get_example_code()
+            st.session_state['code_content'] = get_example_code()
             st.session_state['example_loaded'] = False
         
         code_input = st.text_area(
             "Paste your code here:",
-            value=default_code,
+            value=st.session_state['code_content'],
             height=400,
-            placeholder="Enter Python or JavaScript code to analyze..."
+            placeholder="Enter Python or JavaScript code to analyze...",
+            key='code_area'
         )
+        
+        # Update session state when text changes
+        st.session_state['code_content'] = code_input
         
         # Analyze button
         analyze_button = st.button("🔍 Analyze Code", type="primary", use_container_width=True)
