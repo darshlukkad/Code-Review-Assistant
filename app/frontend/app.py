@@ -165,7 +165,9 @@ def display_sidebar():
     
     def load_example():
         """Callback to load example code."""
-        st.session_state['code_content'] = get_example_code()
+        example = get_example_code()
+        st.session_state['code_content'] = example
+        st.session_state['code_area'] = example
     
     st.sidebar.button(
         "📝 Load Example Code",
