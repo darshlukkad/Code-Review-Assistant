@@ -43,6 +43,7 @@ st.markdown("""
         border-radius: 0.5rem;
         margin: 0.5rem 0;
         border-left: 4px solid;
+        color: #1f2937;
     }
     
     .issue-critical {
