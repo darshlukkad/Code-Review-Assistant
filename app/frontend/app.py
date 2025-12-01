@@ -160,10 +160,18 @@ def display_sidebar():
         "🚨 **Code Smells** - Design issues"
     )
     
-    # Example code
+    # Example code button with callback
     st.sidebar.markdown("---")
-    if st.sidebar.button("📝 Load Example Code"):
-        st.session_state['example_loaded'] = True
+    
+    def load_example():
+        """Callback to load example code."""
+        st.session_state['code_content'] = get_example_code()
+    
+    st.sidebar.button(
+        "📝 Load Example Code",
+        on_click=load_example,
+        use_container_width=True
+    )
     
     return threshold, language
 
@@ -272,11 +280,7 @@ def main():
     with col1:
         st.subheader("📝 Code Input")
         
-        # Load example if requested
-        if st.session_state.get('example_loaded', False):
-            st.session_state['code_content'] = get_example_code()
-            st.session_state['example_loaded'] = False
-        
+        # Text area for code input
         code_input = st.text_area(
             "Paste your code here:",
             value=st.session_state['code_content'],
